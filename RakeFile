@@ -1,0 +1,75 @@
+include FileTest
+
+require 'rubygems'
+require 'zip/zip'
+require 'zip/zipfilesystem'
+require 'albacore'
+
+ROOT_NAMESPACE = "Commander"
+RESULTS_DIR = "Results"
+BUILD_NUMBER_BASE = "0.1.0"
+PRODUCT = ROOT_NAMESPACE
+COPYRIGHT = 'Copyright 2010 Joshua Arnold, Jarrod Peace, et al. All rights reserved.';
+COMMON_ASSEMBLY_INFO = 'Source/CommonAssemblyInfo.cs';
+CLR_VERSION = "v3.5"
+COMPILE_TARGET = "debug"
+
+props = { :archive => "Build" }
+
+desc "Compiles and runs unit tests"
+task :all => [:default]
+
+desc "**Default**, compiles and runs tests"
+task :default => [:compile, :unit_test]
+
+desc "Update the version information for the build"
+assemblyinfo :version do |asm|
+  asm_version = BUILD_NUMBER_BASE + ".0"
+  
+  begin
+	gittag = `git describe --long`.chomp 	# looks something like v0.1.0-63-g92228f4
+    gitnumberpart = /-(\d+)-/.match(gittag)
+    gitnumber = gitnumberpart.nil? ? '0' : gitnumberpart[1]
+    commit = `git log -1 --pretty=format:%H`
+  rescue
+    commit = "git unavailable"
+    gitnumber = "0"
+  end
+  build_number = "#{BUILD_NUMBER_BASE}.#{gitnumber}"
+  tc_build_number = ENV["BUILD_NUMBER"]
+  puts "##teamcity[buildNumber '#{build_number}-#{tc_build_number}']" unless tc_build_number.nil?
+  asm.trademark = commit
+  asm.product_name = "#{PRODUCT} #{gittag}"
+  asm.description = build_number
+  asm.version = asm_version
+  asm.file_version = build_number
+  asm.custom_attributes :AssemblyInformationalVersion => asm_version
+  asm.copyright = COPYRIGHT
+  asm.output_file = COMMON_ASSEMBLY_INFO
+end
+
+desc "Prepares the working directory for a new build"
+task :clean do
+	Dir.mkdir props[:archive] unless exists?(props[:archive])
+  Dir.mkdir RESULTS_DIR unless exists?(RESULTS_DIR)
+end
+
+desc "Compiles the app"
+msbuild :compile => [:clean, :version] do |msb|
+  msb.properties :configuration => COMPILE_TARGET
+  msb.targets :Clean, :Build
+  msb.solution = "Source/#{ROOT_NAMESPACE}.sln"
+  
+  outDir = "Source/#{ROOT_NAMESPACE}/bin/#{COMPILE_TARGET}"
+    
+  Dir.glob(File.join(outDir, "*.{dll,xml}")){|file| 		
+	copy(file, props[:archive]) if File.file?(file)
+  }
+end
+
+desc "Runs all unit tests"
+nunit :unit_test do |nunit|
+	nunit.path_to_command = "lib/NUnit/nunit-console.exe"
+	nunit.assemblies "Source/#{ROOT_NAMESPACE}.Tests/bin/debug/#{ROOT_NAMESPACE}.Tests.dll"
+  nunit.parameters "/out:#{RESULTS_DIR}/nunit_results.xml"
+end
