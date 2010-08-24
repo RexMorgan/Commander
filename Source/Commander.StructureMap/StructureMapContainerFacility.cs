@@ -33,6 +33,16 @@ namespace Commander.StructureMap
         {
             _container = container;
             _registry = new StructureMapCommanderRegistry();
+            Register(typeof(IContainer), new ObjectDef
+                                             {
+                                                 Type = typeof(IContainer),
+                                                 Value = container
+                                             });
+            Register(typeof(IContainerFacility), new ObjectDef
+                                            {
+                                                Type = typeof(IContainerFacility),
+                                                Value = this
+                                            });
         }
 
         private bool _initializeSingletonsToWorkAroundSmBug = true;

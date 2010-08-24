@@ -1,7 +1,3 @@
-using Commander.Bootstrapping;
-using Commander.Registration;
-using Commander.Registration.Nodes;
-using Commander.Runtime;
 using Commander.StructureMap;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -15,34 +11,30 @@ namespace Commander.Tests.Scenarios
         [Test]
         public void wrapping_commands_get_executed()
         {
-            var chain = CommandChain.For<User>();
-            chain.Prepend(CommandCall.For<DummyCommand>(cmd => cmd.Execute()));
-
-            var graph = new CommandGraph();
-            graph.AddChainForNew(chain);
-
             var dependency = MockRepository.GenerateMock<IDependency>();
-
             var container = new Container(x => x.For<IDependency>().Use(dependency));
             var facility = new StructureMapContainerFacility(container);
-            container.Configure(x => x.For<IContainerFacility>().Use(facility));
+            CommanderFactory.Initialize(facility, registry =>
+                                                      {
+                                                          registry
+                                                              .Applies
+                                                              .ToThisAssembly();
 
-            graph
-                .Services
-                .SetServiceIfNone<ICommandContext, CommandContext>();
-            graph
-                .Services
-                .SetServiceIfNone<IEntityBuilderRegistry, EntityBuilderRegistry>();
+                                                          registry
+                                                              .Entities
+                                                              .IncludeType<User>();
 
-            graph.EachService(facility.Register);
-
-            var compiler = new CommandCompiler(facility);
-            var invoker = new CommandInvoker(graph, compiler);
+                                                          registry
+                                                              .Policies
+                                                              .WrapCommandChainsWith<DummyCommand>(cmd => cmd.Execute());
+                                                      });
 
             dependency.Expect(d => d.Mark());
             dependency.Replay();
 
-            invoker.ForNew(new MyUserCommand());
+            CommanderFactory
+                .Invoker
+                .ForNew(new MyUserCommand());
 
             dependency.VerifyAllExpectations();
         }

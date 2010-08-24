@@ -102,9 +102,9 @@ namespace Commander.Registration.Nodes
             return Calls.FirstOrDefault();
         }
 
-        public bool ContainsCall(Func<CommandCall, bool> filter)
+        public bool ContainsNode(Func<CommandNode, bool> filter)
         {
-            return Calls.Any(filter);
+            return this.Any(filter);
         }
 
         public Type CommandInputType()
@@ -122,10 +122,7 @@ namespace Commander.Registration.Nodes
 
         public static CommandChain For<T>()
         {
-            var chain = new CommandChain(typeof(T));
-            chain.AddToEnd(new Placeholder());
-
-            return chain;
+            return new CommandChain(typeof(T));
         }
 
         public override CommandNode Copy()

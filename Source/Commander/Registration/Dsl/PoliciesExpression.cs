@@ -17,14 +17,41 @@ namespace Commander.Registration.Dsl
             _actions = actions;
         }
 
-        public PoliciesExpression ConditionallyWrapCommandChainsWith<T>(Expression<Func<CommandCall, bool>> filter) 
+        public PoliciesExpression WrapCommandChainsWith<T>()
+            where T : ICommand
+        {
+            var reason = "wrap with the {0} command".ToFormat(typeof(T).Name);
+            var configAction = new VisitCommandsAction(v =>
+                                                        {
+                                                            v.Actions += chain => chain.Prepend(new Wrapper(typeof(T)));
+                                                        }, reason);
+
+            _actions.Fill(configAction);
+
+            return this;
+        }
+
+        public PoliciesExpression WrapCommandChainsWith<T>(Expression<Action<T>> expression)
+        {
+            var reason = "wrap with the {0} command".ToFormat(typeof(T).Name);
+            var configAction = new VisitCommandsAction(v =>
+                                                        {
+                                                            v.Actions += chain => chain.Prepend(CommandCall.For(expression));
+                                                        }, reason);
+
+            _actions.Fill(configAction);
+
+            return this;
+        }
+
+        public PoliciesExpression ConditionallyWrapCommandChainsWith<T>(Expression<Func<CommandNode, bool>> filter) 
             where T : ICommand
         {
             var reason = "wrap with the {0} command if [{1}]".ToFormat(typeof(T).Name, filter.Body.ToString());
             var chainFilter = filter.Compile();
             var configAction = new VisitCommandsAction(v =>
                                                            {
-                                                               v.Filters += chain => chain.ContainsCall(chainFilter);
+                                                               v.Filters += chain => chain.ContainsNode(chainFilter);
                                                                v.Actions += chain => chain.Prepend(new Wrapper(typeof(T)));
                                                            }, reason);
 
