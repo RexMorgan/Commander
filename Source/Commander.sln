@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commander.Tests", "Commande
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commander.StructureMap", "Commander.StructureMap\Commander.StructureMap.csproj", "{4EC74167-B882-4F8F-95A2-0ACBC4F6C3E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commander.HelloWorld", "Commander.HelloWorld\Commander.HelloWorld.csproj", "{FEE39250-FFDB-4CEC-89CD-EA3488F26353}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,16 @@ Global
 		{4EC74167-B882-4F8F-95A2-0ACBC4F6C3E6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{4EC74167-B882-4F8F-95A2-0ACBC4F6C3E6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{4EC74167-B882-4F8F-95A2-0ACBC4F6C3E6}.Release|x86.ActiveCfg = Release|Any CPU
+		{FEE39250-FFDB-4CEC-89CD-EA3488F26353}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{FEE39250-FFDB-4CEC-89CD-EA3488F26353}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{FEE39250-FFDB-4CEC-89CD-EA3488F26353}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{FEE39250-FFDB-4CEC-89CD-EA3488F26353}.Debug|x86.ActiveCfg = Debug|x86
+		{FEE39250-FFDB-4CEC-89CD-EA3488F26353}.Debug|x86.Build.0 = Debug|x86
+		{FEE39250-FFDB-4CEC-89CD-EA3488F26353}.Release|Any CPU.ActiveCfg = Release|x86
+		{FEE39250-FFDB-4CEC-89CD-EA3488F26353}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{FEE39250-FFDB-4CEC-89CD-EA3488F26353}.Release|Mixed Platforms.Build.0 = Release|x86
+		{FEE39250-FFDB-4CEC-89CD-EA3488F26353}.Release|x86.ActiveCfg = Release|x86
+		{FEE39250-FFDB-4CEC-89CD-EA3488F26353}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

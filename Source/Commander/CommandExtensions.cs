@@ -1,5 +1,5 @@
-using System.Reflection;
 using Commander.Registration.Nodes;
+using FubuCore.Reflection;
 
 namespace Commander
 {
@@ -8,10 +8,8 @@ namespace Commander
         public static CommandCall ToCommandCall<TEntity>(this IDomainCommand<TEntity> command)
             where TEntity : class
         {
-            var cmdType = command.GetType();
-            var method = cmdType.GetMethod("Execute", BindingFlags.Instance | BindingFlags.Public);
-
-            return new CommandCall(cmdType, method);
+            return new CommandCall(command.GetType(), 
+                ReflectionHelper.GetMethod<IDomainCommand<TEntity>>(cmd => cmd.Execute(null)));
         }
     }
 }

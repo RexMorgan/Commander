@@ -10,6 +10,7 @@ namespace Commander.Registration.Nodes
         public CommandChain(Type entityType)
         {
             EntityType = entityType;
+            Top = new Placeholder();
         }
 
         public Type EntityType { get; private set; }

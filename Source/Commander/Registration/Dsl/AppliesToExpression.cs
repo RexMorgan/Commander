@@ -1,6 +1,5 @@
 using System.Diagnostics;
 using System.Reflection;
-using Commander.Util;
 
 namespace Commander.Registration.Dsl
 {

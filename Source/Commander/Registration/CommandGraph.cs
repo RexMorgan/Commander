@@ -5,7 +5,6 @@ using Commander.Diagnostics;
 using Commander.Registration.Dsl;
 using Commander.Registration.Graph;
 using Commander.Registration.Nodes;
-using Commander.Util;
 
 namespace Commander.Registration
 {
@@ -34,6 +33,9 @@ namespace Commander.Registration
 
         public List<CommandRegistry> Registries { get { return _registries; } }
 
+        public IEnumerable<CommandChain> ChainsForNew { get { return _chainsForNew; } }
+        public IEnumerable<CommandChain> ChainsForExisting { get { return _chainsForExisting; } }
+
         public void EachService(Action<Type, ObjectDef> action)
         {
             _services.Each(action);
@@ -45,6 +47,12 @@ namespace Commander.Registration
             {
                 Value = this
             });
+        }
+
+        public void VisitCommands(ICommandVisitor visitor)
+        {
+            _chainsForNew.Each(visitor.VisitCommand);
+            _chainsForExisting.Each(visitor.VisitCommand);
         }
 
         public void AddChainForNew(CommandChain chain)

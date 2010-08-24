@@ -53,6 +53,14 @@
     <Compile Include="Commands\OneInZeroOutCommandInvoker.cs" />
     <Compile Include="Commands\ZeroInZeroOutCommandInvoker.cs" />
     <Compile Include="Registration\Dsl\AppliesToExpression.cs" />
+    <Compile Include="Registration\CommandVisitor.cs" />
+    <Compile Include="Registration\Dsl\EntityCandidateExpression.cs" />
+    <Compile Include="Registration\Dsl\EntityMatcher.cs" />
+    <Compile Include="Registration\ICommandVisitor.cs" />
+    <Compile Include="Registration\IConfigurationAction.cs" />
+    <Compile Include="Registration\LambdaConfigurationAction.cs" />
+    <Compile Include="Registration\Dsl\PoliciesExpression.cs" />
+    <Compile Include="Registration\VisitCommandsAction.cs" />
     <Compile Include="Runtime\CommandCompiler.cs" />
     <Compile Include="CommanderException.cs" />
     <Compile Include="CommandInvoker.cs" />
@@ -79,7 +87,6 @@
     <Compile Include="Registration\Nodes\CommandCall.cs" />
     <Compile Include="Registration\Nodes\CommandNode.cs" />
     <Compile Include="Registration\Dsl\CommandRegistry.cs" />
-    <Compile Include="Registration\Dsl\IRegistrationConvention.cs" />
     <Compile Include="Registration\Nodes\Placeholder.cs" />
     <Compile Include="Registration\Nodes\Wrapper.cs" />
     <Compile Include="Registration\ServiceRegistry.cs" />
@@ -88,11 +95,11 @@
     <Compile Include="Runtime\ICommandFactory.cs" />
     <Compile Include="Runtime\IEntityBuilder.cs" />
     <Compile Include="Runtime\IEntityBuilderRegistry.cs" />
-    <Compile Include="Util\CompositeFilter.cs" />
-    <Compile Include="Util\CompositePredicate.cs" />
-    <Compile Include="Util\TypePool.cs" />
+    <Compile Include="Registration\TypePool.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Util\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

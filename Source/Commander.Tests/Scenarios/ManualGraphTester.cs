@@ -1,4 +1,3 @@
-using System;
 using Commander.Bootstrapping;
 using Commander.Registration;
 using Commander.Registration.Nodes;
