@@ -13,7 +13,7 @@ using StructureMap.Pipeline;
 
 namespace Commander.StructureMap
 {
-    public class StructureMapContainerFacility : IContainerFacility, ICommandFactory
+    public class StructureMapContainerFacility : IContainerFacility, ICommandFactory, IEntityBuilderFactory
     {
         private readonly IContainer _container;
         private readonly Registry _registry;
@@ -74,6 +74,11 @@ namespace Commander.StructureMap
             return this;
         }
 
+        public IEntityBuilderFactory BuildEntityBuilderFactory()
+        {
+            return this;
+        }
+
         private void initialize_Singletons_to_work_around_StructureMap_GitHub_Issue_3()
         {
             var allSingletons = _container.Model.PluginTypes.Where(x => x.Lifecycle == InstanceScope.Singleton.ToString());
@@ -99,6 +104,14 @@ namespace Commander.StructureMap
             if (ServiceRegistry.ShouldBeSingleton(serviceType))
             {
                 _registry.For(serviceType).Singleton();
+            }
+        }
+
+        public IEntityBuilder Build(ObjectDef builderDef)
+        {
+            using(var container = _container.GetNestedContainer())
+            {
+                return (IEntityBuilder)container.GetInstance(builderDef.Type);
             }
         }
     }

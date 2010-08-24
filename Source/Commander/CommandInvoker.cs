@@ -1,3 +1,4 @@
+using System;
 using Commander.Registration;
 using Commander.Runtime;
 
@@ -18,6 +19,13 @@ namespace Commander
         {
             _compiler
                 .Compile(_graph.ChainForNew<TEntity>(), command.ToCommandCall())
+                .Execute();
+        }
+
+        public void ForExisting<TEntity>(IDomainCommand<TEntity> command) where TEntity : class
+        {
+            _compiler
+                .Compile(_graph.ChainForExisting<TEntity>(), command.ToCommandCall())
                 .Execute();
         }
     }

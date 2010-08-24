@@ -49,5 +49,12 @@ namespace Commander.Registration
         {
             return types.Where(filter);
         }
+
+        public void ImportAssemblies(TypePool pool)
+        {
+            pool
+                ._assemblies
+                .Each(AddAssembly);
+        }
     }
 }

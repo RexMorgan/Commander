@@ -1,3 +1,5 @@
+using System;
+using Commander.Runtime;
 using Commander.StructureMap;
 using NUnit.Framework;
 using Rhino.Mocks;
@@ -25,6 +27,14 @@ namespace Commander.Tests.Scenarios
                                                               .IncludeType<User>();
 
                                                           registry
+                                                              .EntityBuilders
+                                                              .IncludeTypesClosing(typeof (IEntityBuilder<>));
+
+                                                          registry
+                                                              .EntityBuilders
+                                                              .RegisterAllAvailable();
+
+                                                          registry
                                                               .Policies
                                                               .WrapCommandChainsWith<DummyCommand>(cmd => cmd.Execute());
                                                       });
@@ -44,6 +54,7 @@ namespace Commander.Tests.Scenarios
         {
             public void Execute(User entity)
             {
+                entity.FirstName = "Test";
             }
         }
         #endregion
@@ -51,8 +62,29 @@ namespace Commander.Tests.Scenarios
         #region Nested Type: User
         public class User
         {
+            public User(int userId)
+            {
+                UserId = userId;
+            }
+
+            public int UserId { get; private set; }
             public string FirstName { get; set; }
             public string LastName { get; set; }
+        }
+        #endregion
+
+        #region Nested Type: UserBuilder
+        public class UserBuilder : IEntityBuilder<User>
+        {
+            public Type EntityType
+            {
+                get { return typeof (User); }
+            }
+
+            public object Build()
+            {
+                return new User(1);
+            }
         }
         #endregion
 

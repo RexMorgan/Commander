@@ -129,5 +129,25 @@ namespace Commander.Registration.Nodes
         {
             return new CommandChain(EntityType);
         }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof(CommandChain)) return false;
+            return Equals((CommandChain)obj);
+        }
+
+        public bool Equals(CommandChain other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(other.EntityType, EntityType);
+        }
+
+        public override int GetHashCode()
+        {
+            return (EntityType != null ? EntityType.GetHashCode() : 0);
+        }
     }
 }

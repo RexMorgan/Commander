@@ -7,4 +7,8 @@ namespace Commander.Runtime
         Type EntityType { get; }
         object Build();
     }
+
+    public interface IEntityBuilder<TEntity> : IEntityBuilder
+    {
+    }
 }

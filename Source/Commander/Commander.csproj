@@ -53,9 +53,11 @@
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\OneInZeroOutCommandInvoker.cs" />
     <Compile Include="Commands\ZeroInZeroOutCommandInvoker.cs" />
+    <Compile Include="Registration\Dsl\EntityBuilderMatcher.cs" />
+    <Compile Include="Registration\Dsl\EntityBuildersExpression.cs" />
     <Compile Include="Registration\Dsl\AppliesToExpression.cs" />
     <Compile Include="Registration\CommandVisitor.cs" />
-    <Compile Include="Registration\Dsl\EntityCandidateExpression.cs" />
+    <Compile Include="Registration\Dsl\TypeCandidateExpression.cs" />
     <Compile Include="Registration\Dsl\EntityMatcher.cs" />
     <Compile Include="Registration\ICommandVisitor.cs" />
     <Compile Include="Registration\IConfigurationAction.cs" />
@@ -96,6 +98,7 @@
     <Compile Include="Runtime\ICommandContext.cs" />
     <Compile Include="Runtime\ICommandFactory.cs" />
     <Compile Include="Runtime\IEntityBuilder.cs" />
+    <Compile Include="Runtime\IEntityBuilderFactory.cs" />
     <Compile Include="Runtime\IEntityBuilderRegistry.cs" />
     <Compile Include="Registration\TypePool.cs" />
   </ItemGroup>

@@ -6,6 +6,9 @@ namespace Commander
     {
         void ForNew<TEntity>(IDomainCommand<TEntity> command)
             where TEntity : class;
+
+        void ForExisting<TEntity>(IDomainCommand<TEntity> command)
+            where TEntity : class;
     }
 
     public static class InvocationExtensions

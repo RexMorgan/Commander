@@ -25,11 +25,12 @@ namespace Commander
         {
             lock(typeof(CommanderFactory))
             {
-                _graph = registry.BuildGraph();
+                _graph = registry.BuildGraph(facility.BuildEntityBuilderFactory());
                 _graph
                     .Services
                     .ReplaceService<IContainerFacility>(facility);
                 _graph.EachService(facility.Register);
+                registry.BuilderRegistry.EachBuilder(facility.Register);
 
                 _invoker = new CommandInvoker(_graph, new CommandCompiler(facility));
             }
@@ -37,8 +38,7 @@ namespace Commander
 
         public static void Initialize(IContainerFacility facility, Action<CommandRegistry> configure)
         {
-            var registry = new CommandRegistry(configure);
-            Initialize(facility, registry);
+            Initialize(facility, new CommandRegistry(configure));
         }
     }
 }
