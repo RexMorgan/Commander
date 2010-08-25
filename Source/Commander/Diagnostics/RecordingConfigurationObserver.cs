@@ -6,22 +6,22 @@ namespace Commander.Diagnostics
 {
     public class RecordingConfigurationObserver : IConfigurationObserver
     {
-        private readonly Cache<CommandCall, IList<string>> _log = new Cache<CommandCall, IList<string>>(c => new List<string>());
+        private readonly Cache<CommandNode, IList<string>> _log = new Cache<CommandNode, IList<string>>(c => new List<string>());
 
         public bool IsRecording
         {
             get { return true; }
         }
 
-        public void RecordCallStatus(CommandCall call, string description)
+        public void RecordCallStatus(CommandNode node, string description)
         {
-            _log[call].Add(description);
+            _log[node].Add(description);
             LastLogEntry = description;
         }
 
-        public IEnumerable<string> GetLog(CommandCall call)
+        public IEnumerable<string> GetLog(CommandNode node)
         {
-            return _log[call];
+            return _log[node];
         }
 
         public string LastLogEntry { get; private set; }

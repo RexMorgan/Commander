@@ -6,7 +6,7 @@ namespace Commander.Diagnostics
     public interface IConfigurationObserver
     {
         bool IsRecording { get; }
-        void RecordCallStatus(CommandCall call, string status);
-        IEnumerable<string> GetLog(CommandCall call);
+        void RecordCallStatus(CommandNode node, string status);
+        IEnumerable<string> GetLog(CommandNode node);
     }
 }

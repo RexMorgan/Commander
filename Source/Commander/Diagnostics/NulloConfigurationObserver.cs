@@ -10,7 +10,7 @@ namespace Commander.Diagnostics
             get { return false; }
         }
 
-        public void RecordCallStatus(CommandCall call, string status)
+        public void RecordCallStatus(CommandNode node, string status)
         {
         }
 
@@ -18,7 +18,7 @@ namespace Commander.Diagnostics
         {
         }
 
-        public IEnumerable<string> GetLog(CommandCall call)
+        public IEnumerable<string> GetLog(CommandNode node)
         {
             yield break;
         }
