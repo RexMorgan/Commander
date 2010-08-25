@@ -18,14 +18,14 @@ namespace Commander
             where TEntity : class
         {
             _compiler
-                .Compile(_graph.ChainForNew<TEntity>(), command.ToCommandCall())
-                .Execute();
+                 .CompileNew<TEntity>(_graph, command.ToCommandCall())
+                 .Execute();
         }
 
-        public void ForExisting<TEntity>(IDomainCommand<TEntity> command) where TEntity : class
+        public void ForExisting<TEntity>(Action<EntityRequest> action, IDomainCommand<TEntity> command) where TEntity : class
         {
             _compiler
-                .Compile(_graph.ChainForExisting<TEntity>(), command.ToCommandCall())
+                .CompileExisting<TEntity>(_graph, action, command.ToCommandCall())
                 .Execute();
         }
     }

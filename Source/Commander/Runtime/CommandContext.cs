@@ -9,6 +9,7 @@ namespace Commander.Runtime
         public CommandContext(IEntityBuilderRegistry registry)
         {
             _values.OnMissing = (type => registry.BuilderFor(type).Build());
+            _values[typeof(ICommandContext)] = this;
         }
 
         public T Get<T>() where T : class

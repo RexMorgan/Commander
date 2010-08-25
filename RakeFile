@@ -60,7 +60,7 @@ msbuild :compile => [:clean, :version] do |msb|
   msb.targets :Clean, :Build
   msb.solution = "Source/#{ROOT_NAMESPACE}.sln"
   
-  outDir = "Source/#{ROOT_NAMESPACE}/bin/#{COMPILE_TARGET}"
+  outDir = "Source/#{ROOT_NAMESPACE}.Tests/bin/#{COMPILE_TARGET}"
     
   Dir.glob(File.join(outDir, "*.{dll,xml}")){|file| 		
 	copy(file, props[:archive]) if File.file?(file)

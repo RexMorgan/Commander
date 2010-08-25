@@ -1,4 +1,5 @@
 using System;
+using Commander.Runtime;
 
 namespace Commander
 {
@@ -7,7 +8,7 @@ namespace Commander
         void ForNew<TEntity>(IDomainCommand<TEntity> command)
             where TEntity : class;
 
-        void ForExisting<TEntity>(IDomainCommand<TEntity> command)
+        void ForExisting<TEntity>(Action<EntityRequest> action, IDomainCommand<TEntity> command)
             where TEntity : class;
     }
 
