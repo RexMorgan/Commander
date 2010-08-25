@@ -41,9 +41,13 @@ namespace Commander.Registration
 
         public CommandChain FindChain(Func<CommandChain, bool> predicate)
         {
-            return _chainsForNew
-                        .Union(_chainsForExisting)
-                        .FirstOrDefault(predicate);
+            var chain = _chainsForNew.FirstOrDefault(predicate);
+            if(chain != null)
+            {
+                return chain;
+            }
+
+            return _chainsForExisting.FirstOrDefault(predicate);
         }
 
         public void EachService(Action<Type, ObjectDef> action)
