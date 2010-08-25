@@ -34,7 +34,7 @@ namespace Commander.Runtime
                                                           });
 
             var chain = graph.ChainForExisting<TEntity>();
-            
+            chain.Prepend(new EntityRequestNode());
             return Compile(chain, commandCall);
         }
 

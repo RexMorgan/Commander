@@ -62,7 +62,7 @@ msbuild :compile => [:clean, :version] do |msb|
   
   outDir = "Source/#{ROOT_NAMESPACE}.Tests/bin/#{COMPILE_TARGET}"
     
-  Dir.glob(File.join(outDir, "*.{dll,xml}")){|file| 		
+  Dir.glob(File.join(outDir, "*.{dll,xml,pdb}")){|file| 		
 	copy(file, props[:archive]) if File.file?(file)
   }
 end
