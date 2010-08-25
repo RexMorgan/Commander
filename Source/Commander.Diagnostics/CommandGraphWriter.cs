@@ -76,8 +76,8 @@ namespace Commander.Diagnostics
             var ul = logDiv.Add("ul");
 
             var observer = _graph.Observer;
-            commandChain.Calls.Each(
-                call => observer.GetLog(call).Each(
+            commandChain.Each(
+                node => observer.GetLog(node).Each(
                             entry => ul.Add("li").Text(entry)));
 
             content.AddChildren(new[]{
