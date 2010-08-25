@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commander.Tests", "Commande
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commander.StructureMap", "Commander.StructureMap\Commander.StructureMap.csproj", "{4EC74167-B882-4F8F-95A2-0ACBC4F6C3E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commander.Diagnostics", "Commander.FubuMVC\Commander.Diagnostics.csproj", "{44592B3D-6C50-43F2-A323-6AEE22953979}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commander.Diagnostics", "Commander.Diagnostics\Commander.Diagnostics.csproj", "{44592B3D-6C50-43F2-A323-6AEE22953979}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
