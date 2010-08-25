@@ -14,13 +14,16 @@ namespace Commander.Registration
         private readonly List<CommandChain> _chainsForExisting;
         private readonly List<CommandRegistry> _registries;
         private readonly TypePool _types;
-        public CommandGraph()
+        
+        public CommandGraph(IConfigurationObserver observer)
         {
             _types = new TypePool();
             _registries = new List<CommandRegistry>();
 
             _chainsForNew = new List<CommandChain>();
             _chainsForExisting = new List<CommandChain>();
+
+            Observer = observer;
         }
 
         private readonly IServiceRegistry _services = new ServiceRegistry();
@@ -35,6 +38,13 @@ namespace Commander.Registration
 
         public IEnumerable<CommandChain> ChainsForNew { get { return _chainsForNew; } }
         public IEnumerable<CommandChain> ChainsForExisting { get { return _chainsForExisting; } }
+
+        public CommandChain FindChain(Func<CommandChain, bool> predicate)
+        {
+            return _chainsForNew
+                        .Union(_chainsForExisting)
+                        .FirstOrDefault(predicate);
+        }
 
         public void EachService(Action<Type, ObjectDef> action)
         {
@@ -84,6 +94,12 @@ namespace Commander.Registration
         public CommandChain ChainForExisting<T>()
         {
             return _chainsForExisting.FirstOrDefault(chain => chain.EntityType == typeof(T));
+        }
+
+        public void Import(CommandGraph graph)
+        {
+            graph.ChainsForExisting.Each(AddChainForExisting);
+            graph.ChainsForNew.Each(AddChainForNew);
         }
     }
 }

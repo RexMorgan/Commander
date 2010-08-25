@@ -27,9 +27,19 @@ namespace Commander.Runtime
             Set(typeof (T), target);
         }
 
-        public void Set(Type type, object target)
+        public virtual void Set(Type type, object target)
         {
             _values[type] = target;
+        }
+
+        public bool Has<T>()
+        {
+            return Has(typeof (T));
+        }
+
+        public bool Has(Type type)
+        {
+            return _values.Has(type);
         }
     }
 }

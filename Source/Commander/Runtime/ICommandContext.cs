@@ -8,5 +8,7 @@ namespace Commander.Runtime
         object Get(Type type);
         void Set<T>(T target) where T : class;
         void Set(Type type, object target);
+        bool Has<T>();
+        bool Has(Type type);
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using Commander.Diagnostics;
 using Commander.Runtime;
 using Commander.StructureMap;
 using NUnit.Framework;
@@ -37,6 +38,8 @@ namespace Commander.Tests.Scenarios
                                                           registry
                                                               .Policies
                                                               .WrapCommandChainsWith<DummyCommand>(cmd => cmd.Execute());
+
+                                                          registry.IncludeDiagnostics();
                                                       });
 
             dependency.Expect(d => d.Mark());

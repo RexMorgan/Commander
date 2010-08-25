@@ -20,4 +20,50 @@ namespace Commander
             invoker.ForNew(new LambdaDomainCommand<TEntity>(action));
         }
     }
+
+    public class UpdateEndpoint
+    {
+        private readonly ICommandInvoker _invoker;
+
+        public UpdateEndpoint(ICommandInvoker invoker)
+        {
+            _invoker = invoker;
+        }
+
+        public AjaxResponse Post(UpdateUserInputModel inputModel)
+        {
+            _invoker.ForExisting(request => { request.EntityId = inputModel.UserId; }, new UpdateUserCommand(inputModel));
+
+            return null;
+        }
+    }
+
+    public class User
+    {
+        public int UserId { get; set; }
+        public string FirstName { get; set; }
+    }
+    
+    public class AjaxResponse { }
+    
+    public class UpdateUserInputModel
+    {
+        public int UserId { get; set; }
+        public string FirstName { get; set; }
+    }
+
+    public class UpdateUserCommand : IDomainCommand<User>
+    {
+        private readonly UpdateUserInputModel _model;
+
+        public UpdateUserCommand(UpdateUserInputModel model)
+        {
+            _model = model;
+        }
+
+        public void Execute(User entity)
+        {
+            entity.FirstName = _model.FirstName;
+        }
+    }
 }

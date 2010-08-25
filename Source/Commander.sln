@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commander.Tests", "Commande
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commander.StructureMap", "Commander.StructureMap\Commander.StructureMap.csproj", "{4EC74167-B882-4F8F-95A2-0ACBC4F6C3E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commander.Diagnostics", "Commander.FubuMVC\Commander.Diagnostics.csproj", "{44592B3D-6C50-43F2-A323-6AEE22953979}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,16 @@ Global
 		{4EC74167-B882-4F8F-95A2-0ACBC4F6C3E6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{4EC74167-B882-4F8F-95A2-0ACBC4F6C3E6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{4EC74167-B882-4F8F-95A2-0ACBC4F6C3E6}.Release|x86.ActiveCfg = Release|Any CPU
+		{44592B3D-6C50-43F2-A323-6AEE22953979}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44592B3D-6C50-43F2-A323-6AEE22953979}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44592B3D-6C50-43F2-A323-6AEE22953979}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{44592B3D-6C50-43F2-A323-6AEE22953979}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{44592B3D-6C50-43F2-A323-6AEE22953979}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{44592B3D-6C50-43F2-A323-6AEE22953979}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44592B3D-6C50-43F2-A323-6AEE22953979}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44592B3D-6C50-43F2-A323-6AEE22953979}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{44592B3D-6C50-43F2-A323-6AEE22953979}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{44592B3D-6C50-43F2-A323-6AEE22953979}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

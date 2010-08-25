@@ -5,14 +5,13 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{408D2C52-78D2-4F00-B6BF-45BF147ECAF7}</ProjectGuid>
+    <ProjectGuid>{44592B3D-6C50-43F2-A323-6AEE22953979}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Commander.Tests</RootNamespace>
-    <AssemblyName>Commander.Tests</AssemblyName>
+    <RootNamespace>Commander.Diagnostics</RootNamespace>
+    <AssemblyName>Commander.Diagnostics</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,7 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FubuCore, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="FubuCore">
+      <HintPath>..\..\Lib\FubuMVC\FubuCore.dll</HintPath>
+    </Reference>
     <Reference Include="FubuMVC.Core">
       <HintPath>..\..\Lib\FubuMVC\FubuMVC.Core.dll</HintPath>
     </Reference>
@@ -42,18 +43,6 @@
     <Reference Include="HtmlTags">
       <HintPath>..\..\Lib\FubuMVC\HtmlTags.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\..\Lib\NUnit\framework\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhino.Mocks">
-      <HintPath>..\..\Lib\RhinoMocks\Rhino.Mocks.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureMap">
-      <HintPath>..\..\Lib\StructureMap\StructureMap.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureMap.AutoMocking">
-      <HintPath>..\..\Lib\StructureMap\StructureMap.AutoMocking.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -62,25 +51,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommanderDebugReport.cs" />
+    <Compile Include="CommanderDiagnosticUrlPolicy.cs" />
+    <Compile Include="CommandGraphWriter.cs" />
+    <Compile Include="CommandReport.cs" />
+    <Compile Include="CommanderDiagnosticBehaviorPrepender.cs" />
+    <Compile Include="CommanderDiagnosticsPackage.cs" />
+    <Compile Include="CommanderDiagnosticsRegistry.cs" />
+    <Compile Include="CommandStart.cs" />
+    <Compile Include="CommandStep.cs" />
+    <Compile Include="CommandTracer.cs" />
+    <Compile Include="DiagnosticCommand.cs" />
+    <Compile Include="DiagnosticsExtensions.cs" />
+    <Compile Include="ExceptionReport.cs" />
+    <Compile Include="ICommandDetails.cs" />
+    <Compile Include="ICommandDetailsVisitor.cs" />
+    <Compile Include="ICommanderDebugDetector.cs" />
+    <Compile Include="ICommanderDebugReport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scenarios\ManualGraphTester.cs" />
-    <Compile Include="SpecificationExtensions.cs" />
+    <Compile Include="RecordingCommandContext.cs" />
+    <Compile Include="SetValueReport.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Commander.FubuMVC\Commander.Diagnostics.csproj">
-      <Project>{44592B3D-6C50-43F2-A323-6AEE22953979}</Project>
-      <Name>Commander.Diagnostics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Commander.StructureMap\Commander.StructureMap.csproj">
-      <Project>{4EC74167-B882-4F8F-95A2-0ACBC4F6C3E6}</Project>
-      <Name>Commander.StructureMap</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Commander\Commander.csproj">
       <Project>{F2D977B1-1AFE-4827-83F0-946563DC756C}</Project>
       <Name>Commander</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

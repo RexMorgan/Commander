@@ -29,6 +29,7 @@ namespace Commander
                 _graph
                     .Services
                     .ReplaceService<IContainerFacility>(facility);
+                
                 _graph.EachService(facility.Register);
                 registry.BuilderRegistry.EachBuilder(facility.Register);
 

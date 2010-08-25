@@ -62,6 +62,7 @@
     <Compile Include="Registration\Dsl\EntityMatcher.cs" />
     <Compile Include="Registration\ICommandVisitor.cs" />
     <Compile Include="Registration\IConfigurationAction.cs" />
+    <Compile Include="Registration\IRegistryModification.cs" />
     <Compile Include="Registration\LambdaConfigurationAction.cs" />
     <Compile Include="Registration\Dsl\PoliciesExpression.cs" />
     <Compile Include="Registration\Nodes\EntityRequestNode.cs" />
