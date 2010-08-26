@@ -52,6 +52,52 @@ namespace Commander.Tests.Scenarios
             dependency.VerifyAllExpectations();
         }
 
+        [Test]
+        public void invocation_result_is_returned()
+        {
+            var dependency = MockRepository.GenerateMock<IDependency>();
+            var container = new Container(x => x.For<IDependency>().Use(dependency));
+            var facility = new StructureMapContainerFacility(container);
+            CommanderFactory.Initialize(facility, registry =>
+            {
+                registry
+                    .Applies
+                    .ToThisAssembly();
+
+                registry
+                    .Entities
+                    .IncludeType<User>();
+
+                registry
+                    .EntityBuilders
+                    .IncludeTypesClosing(typeof(IEntityBuilder<>));
+
+                registry
+                    .EntityBuilders
+                    .RegisterAllAvailable();
+
+                registry
+                    .Policies
+                    .WrapCommandChainsWith<DummyCommand>(cmd => cmd.Execute());
+
+                registry.IncludeDiagnostics();
+            });
+
+            dependency.Expect(d => d.Mark());
+            dependency.Replay();
+
+            var result = CommanderFactory
+                            .Invoker
+                            .ForExisting(request => { request.EntityId = 1; }, new MyUserCommand());
+
+            result
+                .Entity
+                .FirstName
+                .ShouldBeTheSameAs("Test");
+
+            dependency.VerifyAllExpectations();
+        }
+
         #region Nested Type: MyUserCommand
         public class MyUserCommand : IDomainCommand<User>
         {
