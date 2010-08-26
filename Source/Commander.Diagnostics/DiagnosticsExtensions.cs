@@ -9,7 +9,7 @@ namespace Commander.Diagnostics
             registry.UsingObserver(new RecordingConfigurationObserver());
             registry.Import<CommanderDiagnosticsRegistry>();
             registry.Modify<CommanderDiagnosticsPackage>();
-            registry.AddSystemPolicy<CommanderDiagnosticBehaviorPrepender>();
+            registry.ApplySystemPolicy<CommanderDiagnosticBehaviorPrepender>();
         }
     }
 }

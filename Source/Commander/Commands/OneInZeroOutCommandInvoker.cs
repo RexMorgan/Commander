@@ -1,7 +1,7 @@
 using System;
 using Commander.Runtime;
 
-namespace Commander.Commander
+namespace Commander.Commands
 {
     public class OneInZeroOutCommandInvoker<TCommand, TInput> : BasicCommand 
         where TInput : class

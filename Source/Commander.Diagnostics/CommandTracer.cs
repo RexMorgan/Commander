@@ -1,5 +1,5 @@
 ﻿using System;
-using Commander.Commander;
+using Commander.Commands;
 
 namespace Commander.Diagnostics
 {

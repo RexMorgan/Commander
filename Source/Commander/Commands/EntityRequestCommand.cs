@@ -1,4 +1,3 @@
-using Commander.Commander;
 using Commander.Runtime;
 
 namespace Commander.Commands

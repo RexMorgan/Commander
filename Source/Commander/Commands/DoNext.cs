@@ -1,4 +1,4 @@
-﻿namespace Commander.Commander
+﻿namespace Commander.Commands
 {
     public enum DoNext
     {

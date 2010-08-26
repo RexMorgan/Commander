@@ -1,18 +1,18 @@
 using System;
-using Commander.Commander;
+using Commander.Commands;
 using FubuCore.Binding;
 using StructureMap;
 using StructureMap.Pipeline;
 
 namespace Commander.StructureMap
 {
-    public class NestedStructureMapContainerCommand : ICommand
+    public class StructureMapContainerCommand : ICommand
     {
         private readonly ExplicitArguments _arguments;
         private readonly Guid _behaviorId;
         private readonly IContainer _container;
 
-        public NestedStructureMapContainerCommand(IContainer container, ServiceArguments arguments, Guid behaviorId)
+        public StructureMapContainerCommand(IContainer container, ServiceArguments arguments, Guid behaviorId)
         {
             _container = container;
             _arguments = arguments.ToExplicitArgs();
@@ -22,11 +22,8 @@ namespace Commander.StructureMap
 
         public void Execute()
         {
-            using (IContainer nested = _container.GetNestedContainer())
-            {
-                var command = nested.GetInstance<ICommand>(_arguments, _behaviorId.ToString());
-                command.Execute();
-            }
+            var command = _container.GetInstance<ICommand>(_arguments, _behaviorId.ToString());
+            command.Execute();
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Commander.Commander;
+using Commander.Commands;
 using Commander.Registration.Graph;
 
 namespace Commander.Registration.Nodes

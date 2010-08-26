@@ -14,19 +14,31 @@ namespace Commander
             _compiler = compiler;
         }
 
-        public void ForNew<TEntity>(IDomainCommand<TEntity> command) 
+        public InvocationResult<TEntity> ForNew<TEntity>(IDomainCommand<TEntity> command)
             where TEntity : class
         {
-            _compiler
-                 .CompileNew<TEntity>(_graph, command.ToCommandCall())
-                 .Execute();
+            var compiledCommand = _compiler
+                                    .CompileNew<TEntity>(_graph, command.ToCommandCall());
+            compiledCommand
+                .Command
+                .Execute();
+
+            return compiledCommand
+                .Context
+                .Get<InvocationResult<TEntity>>();
         }
 
-        public void ForExisting<TEntity>(Action<EntityRequest> action, IDomainCommand<TEntity> command) where TEntity : class
+        public InvocationResult<TEntity> ForExisting<TEntity>(Action<EntityRequest> action, IDomainCommand<TEntity> command) where TEntity : class
         {
-            _compiler
-                .CompileExisting<TEntity>(_graph, action, command.ToCommandCall())
+            var compiledCommand = _compiler
+                                    .CompileExisting<TEntity>(_graph, action, command.ToCommandCall());
+            compiledCommand
+                .Command
                 .Execute();
+
+            return compiledCommand
+                .Context
+                .Get<InvocationResult<TEntity>>();
         }
     }
 }

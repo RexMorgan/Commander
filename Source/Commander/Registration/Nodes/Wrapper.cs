@@ -1,5 +1,5 @@
 using System;
-using Commander.Commander;
+using Commander.Commands;
 using Commander.Registration.Graph;
 
 namespace Commander.Registration.Nodes

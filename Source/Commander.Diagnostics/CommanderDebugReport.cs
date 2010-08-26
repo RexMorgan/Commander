@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Commander.Commander;
+using Commander.Commands;
 using FubuMVC.Core.Diagnostics;
 
 namespace Commander.Diagnostics

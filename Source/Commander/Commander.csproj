@@ -52,8 +52,12 @@
     <Compile Include="Commands\DoNext.cs" />
     <Compile Include="Commands\EntityRequestCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\InvocationTracer.cs" />
     <Compile Include="Commands\OneInZeroOutCommandInvoker.cs" />
     <Compile Include="Commands\ZeroInZeroOutCommandInvoker.cs" />
+    <Compile Include="Registration\InvocationTracerPrepender.cs" />
+    <Compile Include="InvocationProblem.cs" />
+    <Compile Include="InvocationResult.cs" />
     <Compile Include="Registration\Dsl\EntityBuilderMatcher.cs" />
     <Compile Include="Registration\Dsl\EntityBuildersExpression.cs" />
     <Compile Include="Registration\Dsl\AppliesToExpression.cs" />
@@ -76,6 +80,7 @@
     <Compile Include="Diagnostics\NulloConfigurationObserver.cs" />
     <Compile Include="Diagnostics\RecordingConfigurationObserver.cs" />
     <Compile Include="DslExtensions.cs" />
+    <Compile Include="Runtime\CompiledCommand.cs" />
     <Compile Include="Runtime\EntityRequest.cs" />
     <Compile Include="Runtime\ICommandCompiler.cs" />
     <Compile Include="ICommandInvoker.cs" />

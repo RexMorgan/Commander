@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Commander.Commander;
+using Commander.Commands;
 using Commander.Registration.Nodes;
 using FubuCore;
 

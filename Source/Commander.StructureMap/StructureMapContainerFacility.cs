@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using Commander.Bootstrapping;
-using Commander.Commander;
+using Commander.Commands;
 using Commander.Registration;
 using Commander.Registration.Graph;
 using Commander.Runtime;
@@ -17,9 +17,6 @@ namespace Commander.StructureMap
     {
         private readonly IContainer _container;
         private readonly Registry _registry;
-
-        public Func<IContainer, ServiceArguments, Guid, ICommand> Builder =
-            (container, args, behaviorId) => new NestedStructureMapContainerCommand(container, args, behaviorId);
 
         public IContainer Container
         {
@@ -53,14 +50,15 @@ namespace Commander.StructureMap
             return this;
         }
 
-        public ICommand BuildCommand(ServiceArguments arguments, Guid behaviorId)
+        public CompiledCommand BuildCommand(ServiceArguments arguments, Guid behaviorId)
         {
-            return Builder(_container, arguments, behaviorId);
+            var container = _container.GetNestedContainer();
+            var command = new StructureMapContainerCommand(container, arguments, behaviorId);
+            return new CompiledCommand(container.GetInstance<ICommandContext>, command);
         }
 
         public ICommandFactory BuildFactory()
         {
-            _registry.For<ICommandFactory>().Use(() => new PartialCommandFactory(_container.GetNestedContainer()));
             _container.Configure(x =>
             {
                 x.AddRegistry(_registry);
@@ -113,21 +111,6 @@ namespace Commander.StructureMap
             {
                 return (IEntityBuilder)container.GetInstance(builderDef.Type);
             }
-        }
-    }
-
-    public class PartialCommandFactory : ICommandFactory
-    {
-        private readonly IContainer _container;
-
-        public PartialCommandFactory(IContainer container)
-        {
-            _container = container;
-        }
-
-        public ICommand BuildCommand(ServiceArguments arguments, Guid commandId)
-        {
-            return _container.GetInstance<ICommand>(arguments.ToExplicitArgs(), commandId.ToString());
         }
     }
 }

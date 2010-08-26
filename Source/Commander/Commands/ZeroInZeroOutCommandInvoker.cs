@@ -1,6 +1,6 @@
 using System;
 
-namespace Commander.Commander
+namespace Commander.Commands
 {
     public class ZeroInZeroOutCommandInvoker<TCommand> : BasicCommand
     {

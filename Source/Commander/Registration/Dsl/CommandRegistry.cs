@@ -50,15 +50,18 @@ namespace Commander.Registration.Dsl
 
         public CommandGraph BuildGraph(IEntityBuilderFactory entityBuilderFactory)
         {
+            ApplySystemPolicy<InvocationTracerPrepender>();
+
             _entityBuilderRegistry.SetFactory(entityBuilderFactory);
 
             var graph = new CommandGraph(_observer);
 
             _conventions.Configure(graph);
             _policies.Configure(graph);
-            _systemPolicies.Configure(graph);
 
             _explicits.Each(action => action(graph));
+
+            _systemPolicies.Configure(graph);
 
             setupServices(graph);
 
@@ -119,7 +122,7 @@ namespace Commander.Registration.Dsl
             _imports.Add(registry);
         }
 
-        public void AddSystemPolicy<TConfigurationAction>()
+        public void ApplySystemPolicy<TConfigurationAction>()
             where TConfigurationAction : IConfigurationAction, new()
         {
             _systemPolicies.Add(new TConfigurationAction());
