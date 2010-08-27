@@ -11,36 +11,37 @@ namespace Commander.Runtime
     public class CommandCompiler : ICommandCompiler
     {
         private readonly IContainerFacility _facility;
-
-        public CommandCompiler(IContainerFacility facility)
+        private readonly IEntityBuilderRegistry _builderRegistry;
+        public CommandCompiler(IContainerFacility facility, IEntityBuilderRegistry builderRegistry)
         {
             _facility = facility;
+            _builderRegistry = builderRegistry;
         }
 
         public CompiledCommand CompileNew<TEntity>(CommandGraph graph, CommandCall commandCall)
             where TEntity : class
         {
-            return Compile(graph.ChainForNew<TEntity>(), commandCall);
+            return Compile(graph.ChainForNew<TEntity>(), ctx => { }, commandCall);
         }
 
-        public CompiledCommand CompileExisting<TEntity>(CommandGraph graph, Action<EntityRequest> action, CommandCall commandCall)
+        public CompiledCommand CompileExisting<TEntity>(CommandGraph graph, Action<ICommandContext> configure, CommandCall commandCall)
             where TEntity : class
         {
-            var request = new EntityRequest();
-            action(request);
-            _facility.Register(typeof(EntityRequest), new ObjectDef(typeof(EntityRequest))
-                                                          {
-                                                              Value = request
-                                                          });
-
             var chain = graph.ChainForExisting<TEntity>();
-            chain.Prepend(new EntityRequestNode());
-            return Compile(chain, commandCall);
+            return Compile(chain, configure, commandCall);
         }
 
         // Keep this public for testing
-        public CompiledCommand Compile(CommandChain chain, CommandCall commandCall)
+        public CompiledCommand Compile(CommandChain chain, Action<ICommandContext> configure, CommandCall commandCall)
         {
+            var context = new CommandContext(_builderRegistry);
+            configure(context);
+
+            _facility.Register(typeof(ICommandContext), new ObjectDef(typeof(CommandContext))
+                                                                {
+                                                                    Value = context
+                                                                });
+
             chain
                 .Placeholder()
                 .ReplaceWith(commandCall);

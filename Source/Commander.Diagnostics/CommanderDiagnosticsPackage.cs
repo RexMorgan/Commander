@@ -11,7 +11,6 @@ namespace Commander.Diagnostics
             registry.Services(x =>
                                   {
                                       x.ReplaceService<ICommanderDebugReport, CommanderDebugReport>();
-                                      x.ReplaceService<ICommandContext, RecordingCommandContext>();
                                       x.ReplaceService<ICommanderDebugDetector, CommanderDebugDetector>();
                                   });
         }

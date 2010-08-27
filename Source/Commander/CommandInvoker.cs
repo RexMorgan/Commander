@@ -28,10 +28,17 @@ namespace Commander
                 .Get<InvocationResult<TEntity>>();
         }
 
-        public InvocationResult<TEntity> ForExisting<TEntity>(Action<EntityRequest> action, IDomainCommand<TEntity> command) where TEntity : class
+        public InvocationResult<TEntity> ForExisting<TEntity>(IDomainCommand<TEntity> command) 
+            where TEntity : class
+        {
+            return ForExisting(ctx => { }, command);
+        }
+
+        public InvocationResult<TEntity> ForExisting<TEntity>(Action<ICommandContext> configure, IDomainCommand<TEntity> command) 
+            where TEntity : class
         {
             var compiledCommand = _compiler
-                                    .CompileExisting<TEntity>(_graph, action, command.ToCommandCall());
+                                    .CompileExisting<TEntity>(_graph, configure, command.ToCommandCall());
             compiledCommand
                 .Command
                 .Execute();

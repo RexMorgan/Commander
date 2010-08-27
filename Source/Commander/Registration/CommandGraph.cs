@@ -97,7 +97,18 @@ namespace Commander.Registration
 
         public CommandChain ChainForExisting<T>()
         {
-            return _chainsForExisting.FirstOrDefault(chain => chain.EntityType == typeof(T));
+            return ChainForExisting(typeof (T));
+        }
+
+        public CommandChain ChainForExisting(Type entityType)
+        {
+            var chain = _chainsForExisting.FirstOrDefault(c => c.EntityType == entityType);
+            if (chain == null)
+            {
+                return null;
+            }
+
+            return (CommandChain) chain.Clone();
         }
 
         public void Import(CommandGraph graph)

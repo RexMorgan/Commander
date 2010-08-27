@@ -77,7 +77,7 @@ namespace Commander.Registration.Dsl
         private void setupServices(CommandGraph graph)
         {
             graph.Services.SetServiceIfNone(graph);
-            graph.Services.SetServiceIfNone<ICommandContext, CommandContext>();
+            //graph.Services.SetServiceIfNone<ICommandContext, CommandContext>();
             graph.Services.ReplaceService<IEntityBuilderRegistry>(_entityBuilderRegistry);
             graph.Services.SetServiceIfNone<ICommandCompiler, CommandCompiler>();
             graph.Services.SetServiceIfNone<IEntityBuilderRegistry, EntityBuilderRegistry>();

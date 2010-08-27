@@ -8,7 +8,10 @@ namespace Commander
         InvocationResult<TEntity> ForNew<TEntity>(IDomainCommand<TEntity> command)
             where TEntity : class;
 
-        InvocationResult<TEntity> ForExisting<TEntity>(Action<EntityRequest> action, IDomainCommand<TEntity> command)
+        InvocationResult<TEntity> ForExisting<TEntity>(IDomainCommand<TEntity> command)
+            where TEntity : class;
+
+        InvocationResult<TEntity> ForExisting<TEntity>(Action<ICommandContext> configure, IDomainCommand<TEntity> command)
             where TEntity : class;
     }
 

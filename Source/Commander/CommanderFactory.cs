@@ -33,7 +33,7 @@ namespace Commander
                 _graph.EachService(facility.Register);
                 registry.BuilderRegistry.EachBuilder(facility.Register);
 
-                _invoker = new CommandInvoker(_graph, new CommandCompiler(facility));
+                _invoker = new CommandInvoker(_graph, new CommandCompiler(facility, registry.BuilderRegistry));
             }
         }
 

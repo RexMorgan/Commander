@@ -79,8 +79,6 @@ namespace Commander.Tests.Scenarios
                 registry
                     .Policies
                     .WrapCommandChainsWith<DummyCommand>(cmd => cmd.Execute());
-
-                registry.IncludeDiagnostics();
             });
 
             dependency.Expect(d => d.Mark());
@@ -88,7 +86,7 @@ namespace Commander.Tests.Scenarios
 
             var result = CommanderFactory
                             .Invoker
-                            .ForExisting(request => { request.EntityId = 1; }, new MyUserCommand());
+                            .ForExisting(ctx => ctx.Set(new EntityRequest { EntityId = 1 }), new MyUserCommand());
 
             result
                 .Entity
@@ -96,6 +94,11 @@ namespace Commander.Tests.Scenarios
                 .ShouldBeTheSameAs("Test");
 
             dependency.VerifyAllExpectations();
+        }
+
+        public class EntityRequest
+        {
+            public int EntityId { get; set; }
         }
 
         #region Nested Type: MyUserCommand

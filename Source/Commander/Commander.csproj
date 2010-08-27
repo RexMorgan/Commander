@@ -50,7 +50,6 @@
     <Compile Include="CommandExtensions.cs" />
     <Compile Include="Commands\BasicCommand.cs" />
     <Compile Include="Commands\DoNext.cs" />
-    <Compile Include="Commands\EntityRequestCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\InvocationTracer.cs" />
     <Compile Include="Commands\OneInZeroOutCommandInvoker.cs" />
@@ -69,7 +68,6 @@
     <Compile Include="Registration\IRegistryModification.cs" />
     <Compile Include="Registration\LambdaConfigurationAction.cs" />
     <Compile Include="Registration\Dsl\PoliciesExpression.cs" />
-    <Compile Include="Registration\Nodes\EntityRequestNode.cs" />
     <Compile Include="Registration\RegistrationConventions.cs" />
     <Compile Include="Registration\VisitCommandsAction.cs" />
     <Compile Include="Runtime\CommandCompiler.cs" />
@@ -81,7 +79,6 @@
     <Compile Include="Diagnostics\RecordingConfigurationObserver.cs" />
     <Compile Include="DslExtensions.cs" />
     <Compile Include="Runtime\CompiledCommand.cs" />
-    <Compile Include="Runtime\EntityRequest.cs" />
     <Compile Include="Runtime\ICommandCompiler.cs" />
     <Compile Include="ICommandInvoker.cs" />
     <Compile Include="Bootstrapping\IContainerFacility.cs" />
