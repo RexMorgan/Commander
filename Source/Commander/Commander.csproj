@@ -54,6 +54,7 @@
     <Compile Include="Commands\InvocationTracer.cs" />
     <Compile Include="Commands\OneInZeroOutCommandInvoker.cs" />
     <Compile Include="Commands\ZeroInZeroOutCommandInvoker.cs" />
+    <Compile Include="Compiler.cs" />
     <Compile Include="Registration\InvocationTracerPrepender.cs" />
     <Compile Include="InvocationProblem.cs" />
     <Compile Include="InvocationResult.cs" />
@@ -83,7 +84,6 @@
     <Compile Include="ICommandInvoker.cs" />
     <Compile Include="Bootstrapping\IContainerFacility.cs" />
     <Compile Include="IDomainCommand.cs" />
-    <Compile Include="LambdaDomainCommand.cs" />
     <Compile Include="Registration\IServiceRegistry.cs" />
     <Compile Include="Registration\Nodes\CommandChain.cs" />
     <Compile Include="Registration\CommandGraph.cs" />

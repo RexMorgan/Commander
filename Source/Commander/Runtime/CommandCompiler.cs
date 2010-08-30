@@ -17,10 +17,10 @@ namespace Commander.Runtime
             _builderRegistry = builderRegistry;
         }
 
-        public ICompiledCommand CompileNew<TEntity>(CommandGraph graph, CommandCall commandCall)
+        public ICompiledCommand CompileNew<TEntity>(CommandGraph graph, Action<ICommandContext> configure, CommandCall commandCall)
             where TEntity : class
         {
-            return Compile(graph.ChainForNew<TEntity>(), ctx => { }, commandCall);
+            return Compile(graph.ChainForNew<TEntity>(), configure, commandCall);
         }
 
         public ICompiledCommand CompileExisting<TEntity>(CommandGraph graph, Action<ICommandContext> configure, CommandCall commandCall)

@@ -86,7 +86,7 @@ namespace Commander.Tests.Scenarios
 
             var result = CommanderFactory
                             .Invoker
-                            .ForExisting(ctx => ctx.Set(new EntityRequest { EntityId = 1 }), new MyUserCommand());
+                            .ForExisting<User, MyUserCommand>(ctx => ctx.Set(new EntityRequest { EntityId = 1 }));
 
             result
                 .Entity
@@ -111,20 +111,6 @@ namespace Commander.Tests.Scenarios
         }
         #endregion
 
-        #region Nested Type: User
-        public class User
-        {
-            public User(int userId)
-            {
-                UserId = userId;
-            }
-
-            public int UserId { get; private set; }
-            public string FirstName { get; set; }
-            public string LastName { get; set; }
-        }
-        #endregion
-
         #region Nested Type: UserBuilder
         public class UserBuilder : IEntityBuilder<User>
         {
@@ -141,10 +127,7 @@ namespace Commander.Tests.Scenarios
         #endregion
 
         #region Nested Type: DummyCommand
-        public interface IDependency
-        {
-            void Mark();
-        }
+        
         public class DummyCommand
         {
             private readonly IDependency _dependency;
