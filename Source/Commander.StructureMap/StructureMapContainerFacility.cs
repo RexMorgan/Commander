@@ -50,11 +50,15 @@ namespace Commander.StructureMap
             return this;
         }
 
-        public CompiledCommand BuildCommand(ServiceArguments arguments, Guid behaviorId)
+        public ICompiledCommand BuildCommand(ICommandContext context, ServiceArguments arguments, Guid behaviorId)
         {
+            _container.EjectAllInstancesOf<ICommandContext>();
+
             var container = _container.GetNestedContainer();
+            container.Configure(x => x.For<ICommandContext>().Use(context));
             var command = new StructureMapContainerCommand(container, arguments, behaviorId);
-            return new CompiledCommand(container.GetInstance<ICommandContext>, command);
+            
+            return new StructureMapCompiledCommand(container, command);
         }
 
         public ICommandFactory BuildFactory()
@@ -111,6 +115,37 @@ namespace Commander.StructureMap
             {
                 return (IEntityBuilder)container.GetInstance(builderDef.Type);
             }
+        }
+    }
+
+    public class StructureMapCompiledCommand : ICompiledCommand
+    {
+        private readonly IContainer _container;
+        private ICommand _command;
+
+        public StructureMapCompiledCommand(IContainer container, ICommand command)
+        {
+            _container = container;
+            _command = command;
+        }
+
+        public void Dispose()
+        {
+            _command = null;
+            if(_container != null)
+            {
+                _container.Dispose();
+            }
+        }
+
+        public ICommand Command
+        {
+            get { return _command; }
+        }
+
+        public ICommandContext Context
+        {
+            get { return _container.GetInstance<ICommandContext>(); }
         }
     }
 }

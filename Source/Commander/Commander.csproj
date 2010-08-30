@@ -78,7 +78,7 @@
     <Compile Include="Diagnostics\NulloConfigurationObserver.cs" />
     <Compile Include="Diagnostics\RecordingConfigurationObserver.cs" />
     <Compile Include="DslExtensions.cs" />
-    <Compile Include="Runtime\CompiledCommand.cs" />
+    <Compile Include="Runtime\ICompiledCommand.cs" />
     <Compile Include="Runtime\ICommandCompiler.cs" />
     <Compile Include="ICommandInvoker.cs" />
     <Compile Include="Bootstrapping\IContainerFacility.cs" />

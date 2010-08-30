@@ -2,7 +2,6 @@
 using Commander.Bootstrapping;
 using Commander.Commands;
 using Commander.Registration;
-using Commander.Registration.Graph;
 using Commander.Registration.Nodes;
 using FubuCore.Binding;
 
@@ -18,13 +17,13 @@ namespace Commander.Runtime
             _builderRegistry = builderRegistry;
         }
 
-        public CompiledCommand CompileNew<TEntity>(CommandGraph graph, CommandCall commandCall)
+        public ICompiledCommand CompileNew<TEntity>(CommandGraph graph, CommandCall commandCall)
             where TEntity : class
         {
             return Compile(graph.ChainForNew<TEntity>(), ctx => { }, commandCall);
         }
 
-        public CompiledCommand CompileExisting<TEntity>(CommandGraph graph, Action<ICommandContext> configure, CommandCall commandCall)
+        public ICompiledCommand CompileExisting<TEntity>(CommandGraph graph, Action<ICommandContext> configure, CommandCall commandCall)
             where TEntity : class
         {
             var chain = graph.ChainForExisting<TEntity>();
@@ -32,15 +31,10 @@ namespace Commander.Runtime
         }
 
         // Keep this public for testing
-        public CompiledCommand Compile(CommandChain chain, Action<ICommandContext> configure, CommandCall commandCall)
+        public ICompiledCommand Compile(CommandChain chain, Action<ICommandContext> configure, CommandCall commandCall)
         {
             var context = new CommandContext(_builderRegistry);
             configure(context);
-
-            _facility.Register(typeof(ICommandContext), new ObjectDef(typeof(CommandContext))
-                                                                {
-                                                                    Value = context
-                                                                });
 
             chain
                 .Placeholder()
@@ -50,7 +44,7 @@ namespace Commander.Runtime
 
             return _facility
                 .BuildFactory()
-                .BuildCommand(new ServiceArguments(), chain.UniqueId);
+                .BuildCommand(context, new ServiceArguments(), chain.UniqueId);
         }
     }
 }

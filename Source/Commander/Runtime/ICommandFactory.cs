@@ -5,6 +5,6 @@ namespace Commander.Runtime
 {
     public interface ICommandFactory
     {
-        CompiledCommand BuildCommand(ServiceArguments arguments, Guid commandId);
+        ICompiledCommand BuildCommand(ICommandContext context, ServiceArguments arguments, Guid commandId);
     }
 }
