@@ -22,7 +22,7 @@ task :all => [:default]
 desc "**Default**, compiles and runs tests"
 task :default => [:compile, :unit_test]
 
-desc "Update the version information for the build from the current tag"
+desc "Update the version information for the build from the current tag..."
 assemblyinfo :version do |asm|
   `git fetch`
   begin
