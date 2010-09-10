@@ -37,6 +37,12 @@ namespace Commander
             return Invoke<TEntity>(configure, command, _compiler.CompileNew<TEntity>);
         }
 
+        public InvocationResult<TEntity> ForNew<TEntity>(Action<ICommandContext> configure) 
+            where TEntity : class
+        {
+            return ForNew(configure, new EmptyDomainCommand<TEntity>());
+        }
+
         public InvocationResult<TEntity> ForNew<TEntity>(Action<ICommandContext> configure, IDomainCommand<TEntity> command)
             where TEntity : class
         {
@@ -60,6 +66,11 @@ namespace Commander
             where TCommand : IDomainCommand<TEntity>
         {
             return ForExisting<TEntity, TCommand>(ctx => { });
+        }
+
+        public InvocationResult<TEntity> ForExisting<TEntity>(Action<ICommandContext> configure) where TEntity : class
+        {
+            return ForExisting(configure, new EmptyDomainCommand<TEntity>());
         }
 
         public InvocationResult<TEntity> ForExisting<TEntity, TCommand>(Action<ICommandContext> configure)
@@ -86,5 +97,15 @@ namespace Commander
                         .Get<InvocationResult<TEntity>>();
             }
         }
+
+        #region Nested Type: EmptyDomainCommand<TEntity>
+        public class EmptyDomainCommand<TEntity> : IDomainCommand<TEntity>
+            where TEntity : class
+        {
+            public void Execute(TEntity entity)
+            {
+            }
+        }
+        #endregion
     }
 }

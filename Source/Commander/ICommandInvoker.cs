@@ -16,6 +16,9 @@ namespace Commander
             where TEntity : class
             where TCommand : IDomainCommand<TEntity>;
 
+        InvocationResult<TEntity> ForNew<TEntity>(Action<ICommandContext> configure)
+            where TEntity : class;
+
         InvocationResult<TEntity> ForNew<TEntity>(Action<ICommandContext> configure, IDomainCommand<TEntity> command)
             where TEntity : class;
 
@@ -28,6 +31,9 @@ namespace Commander
         InvocationResult<TEntity> ForExisting<TEntity, TCommand>()
             where TEntity : class
             where TCommand : IDomainCommand<TEntity>;
+
+        InvocationResult<TEntity> ForExisting<TEntity>(Action<ICommandContext> configure)
+            where TEntity : class;
 
         InvocationResult<TEntity> ForExisting<TEntity, TCommand>(Action<ICommandContext> configure)
             where TEntity : class
