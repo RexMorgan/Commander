@@ -7,7 +7,7 @@ require 'albacore'
 
 ROOT_NAMESPACE = "Commander"
 RESULTS_DIR = "Results"
-BUILD_NUMBER_BASE = "0.1.0"
+BUILD_NUMBER_BASE = "0.1.1"
 PRODUCT = ROOT_NAMESPACE
 COPYRIGHT = 'Copyright 2010 Joshua Arnold, Jarrod Peace, et al. All rights reserved.';
 COMMON_ASSEMBLY_INFO = 'Source/CommonAssemblyInfo.cs';
