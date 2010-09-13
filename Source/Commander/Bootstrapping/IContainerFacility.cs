@@ -6,8 +6,7 @@ namespace Commander.Bootstrapping
 {
     public interface IContainerFacility
     {
-        ICommandFactory BuildFactory();
-        IEntityBuilderFactory BuildEntityBuilderFactory();
+        ICompiler BuildCompiler();
         void Register(Type serviceType, ObjectDef objectDef);
     }
 }

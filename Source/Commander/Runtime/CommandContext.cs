@@ -8,7 +8,8 @@ namespace Commander.Runtime
         private readonly Cache<Type, object> _values = new Cache<Type, object>();
         public CommandContext(IEntityBuilderRegistry registry)
         {
-            _values.OnMissing = (type => registry.BuilderFor(type).Build());
+            Set<ICompilationContext>(new NulloCompilationContext());
+            _values.OnMissing = (type => Get<ICompilationContext>().Get<IEntityBuilder>(registry.BuilderFor(type)).Build());
             _values[typeof(ICommandContext)] = this;
         }
 

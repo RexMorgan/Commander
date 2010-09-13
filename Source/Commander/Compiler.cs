@@ -5,5 +5,5 @@ using Commander.Runtime;
 
 namespace Commander
 {
-    public delegate ICompiledCommand Compiler(CommandGraph graph, Action<ICommandContext> context, CommandCall call);
+    public delegate ICompilationContext Compiler(CommandGraph graph, Action<ICommandContext> context, CommandCall call);
 }

@@ -1,32 +1,57 @@
 using System;
 using System.Collections.Generic;
 using Commander.Runtime;
+using FubuCore;
 
 namespace Commander.Registration.Dsl
 {
-    public class EntityBuildersExpression : TypeCandidateExpression
+    public class EntityBuildersExpression
     {
+        private readonly ITypeMatcher _matcher;
+        private readonly TypePool _types;
         private readonly IList<IEntityBuilderRegistrationConvention> _conventions;
         public EntityBuildersExpression(ITypeMatcher matcher, TypePool types, IList<IEntityBuilderRegistrationConvention> conventions)
-            : base(matcher, types)
         {
+            _matcher = matcher;
+            _types = types;
             _conventions = conventions;
+
+            _matcher.TypeFilters.Includes += (type => !type.IsOpenGeneric() && type.IsConcreteTypeOf<IEntityBuilder>());
+            _matcher.TypeFilters.Includes += (type => type.ImplementsInterfaceTemplate(typeof(IEntityBuilder<>)));
         }
 
-        public void AddFinder<TFinder>()
+        public EntityBuildersExpression Include<T>()
+            where T : IEntityBuilder
+        {
+            _types.AddType(typeof(T));
+            _matcher.TypeFilters.Includes += type => type == typeof(T);
+            return this;
+        }
+
+        public EntityBuildersExpression Exclude<T>()
+            where T : IEntityBuilder
+        {
+            _matcher.TypeFilters.Excludes += (type => type.Equals(typeof(T)));
+            return this;
+        }
+
+        public EntityBuildersExpression ApplyConvention<TFinder>()
             where TFinder : IEntityBuilderRegistrationConvention, new()
         {
-            AddFinder(new TFinder());
+            ApplyConvention(new TFinder());
+            return this;
         }
 
-        public void AddFinder(IEntityBuilderRegistrationConvention builderRegistrationConvention)
+        public EntityBuildersExpression ApplyConvention(IEntityBuilderRegistrationConvention builderRegistrationConvention)
         {
             _conventions.Add(builderRegistrationConvention);
+            return this;
         }
 
-        public void RegisterAllAvailable()
+        public EntityBuildersExpression RegisterAllAvailable()
         {
-            AddFinder<RegisterAllAvailableEntityBuilders>();
+            ApplyConvention<RegisterAllAvailableEntityBuilders>();
+            return this;
         }
     }
 

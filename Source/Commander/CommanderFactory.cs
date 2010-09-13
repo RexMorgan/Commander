@@ -25,7 +25,7 @@ namespace Commander
         {
             lock(typeof(CommanderFactory))
             {
-                _graph = registry.BuildGraph(facility.BuildEntityBuilderFactory());
+                _graph = registry.BuildGraph();
                 _graph
                     .Services
                     .ReplaceService<IContainerFacility>(facility);

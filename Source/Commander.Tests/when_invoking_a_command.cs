@@ -17,11 +17,11 @@ namespace Commander.Tests
         {
             _configure = ctx => { };
             _targetCommand = new TestCommand().ToCommandCall();
-            MockFor<ICompiledCommand>()
+            MockFor<ICompilationContext>()
                 .Expect(cmd => cmd.Command)
                 .Return(MockFor<ICommand>());
 
-            MockFor<ICompiledCommand>()
+            MockFor<ICompilationContext>()
                 .Expect(cmd => cmd.Context)
                 .Return(MockFor<ICommandContext>());
         }
@@ -33,7 +33,7 @@ namespace Commander.Tests
             Compiler compiler = (g, ctx, call) =>
                                                 {
                                                     executed = true;
-                                                    return MockFor<ICompiledCommand>();
+                                                    return MockFor<ICompilationContext>();
                                                 };
 
             ClassUnderTest.Invoke<User>(_configure, _targetCommand, compiler);

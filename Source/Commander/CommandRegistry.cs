@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Commander.Diagnostics;
+using Commander.Registration;
+using Commander.Registration.Dsl;
 using Commander.Runtime;
 
-namespace Commander.Registration.Dsl
+namespace Commander
 {
     public class CommandRegistry
     {
@@ -48,11 +50,9 @@ namespace Commander.Registration.Dsl
             _observer = observer;
         }
 
-        public CommandGraph BuildGraph(IEntityBuilderFactory entityBuilderFactory)
+        public CommandGraph BuildGraph()
         {
             ApplySystemPolicy<InvocationTracerPrepender>();
-
-            _entityBuilderRegistry.SetFactory(entityBuilderFactory);
 
             var graph = new CommandGraph(_observer);
 

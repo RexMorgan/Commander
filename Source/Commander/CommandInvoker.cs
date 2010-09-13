@@ -86,13 +86,13 @@ namespace Commander
         public InvocationResult<TEntity> Invoke<TEntity>(Action<ICommandContext> configure, CommandCall command, Compiler compiler)
             where TEntity : class
         {
-            using (var compiledCommand = compiler(_graph, configure, command))
+            using (var compilationContext = compiler(_graph, configure, command))
             {
-                compiledCommand
+                compilationContext
                     .Command
                     .Execute();
 
-                return compiledCommand
+                return compilationContext
                         .Context
                         .Get<InvocationResult<TEntity>>();
             }

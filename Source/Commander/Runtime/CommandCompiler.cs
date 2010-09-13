@@ -17,13 +17,13 @@ namespace Commander.Runtime
             _builderRegistry = builderRegistry;
         }
 
-        public ICompiledCommand CompileNew<TEntity>(CommandGraph graph, Action<ICommandContext> configure, CommandCall commandCall)
+        public ICompilationContext CompileNew<TEntity>(CommandGraph graph, Action<ICommandContext> configure, CommandCall commandCall)
             where TEntity : class
         {
             return Compile(graph.ChainForNew<TEntity>(), configure, commandCall);
         }
 
-        public ICompiledCommand CompileExisting<TEntity>(CommandGraph graph, Action<ICommandContext> configure, CommandCall commandCall)
+        public ICompilationContext CompileExisting<TEntity>(CommandGraph graph, Action<ICommandContext> configure, CommandCall commandCall)
             where TEntity : class
         {
             var chain = graph.ChainForExisting<TEntity>();
@@ -31,7 +31,7 @@ namespace Commander.Runtime
         }
 
         // Keep this public for testing
-        public ICompiledCommand Compile(CommandChain chain, Action<ICommandContext> configure, CommandCall commandCall)
+        public ICompilationContext Compile(CommandChain chain, Action<ICommandContext> configure, CommandCall commandCall)
         {
             var context = new CommandContext(_builderRegistry);
             configure(context);
@@ -43,8 +43,8 @@ namespace Commander.Runtime
             _facility.Register(typeof (ICommand), chain.ToObjectDef());
 
             return _facility
-                .BuildFactory()
-                .BuildCommand(context, new ServiceArguments(), chain.UniqueId);
+                .BuildCompiler()
+                .Compile(context, new ServiceArguments(), chain.UniqueId);
         }
     }
 }

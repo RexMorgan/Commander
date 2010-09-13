@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using Commander.Bootstrapping;
-using Commander.Commands;
 using Commander.Registration;
 using Commander.Registration.Graph;
 using Commander.Runtime;
@@ -13,7 +12,7 @@ using StructureMap.Pipeline;
 
 namespace Commander.StructureMap
 {
-    public class StructureMapContainerFacility : IContainerFacility, ICommandFactory, IEntityBuilderFactory
+    public class StructureMapContainerFacility : IContainerFacility, ICompiler
     {
         private readonly IContainer _container;
         private readonly Registry _registry;
@@ -50,18 +49,21 @@ namespace Commander.StructureMap
             return this;
         }
 
-        public ICompiledCommand BuildCommand(ICommandContext context, ServiceArguments arguments, Guid behaviorId)
+        public ICompilationContext Compile(ICommandContext context, ServiceArguments arguments, Guid behaviorId)
         {
             _container.EjectAllInstancesOf<ICommandContext>();
 
             var container = _container.GetNestedContainer();
-            container.Configure(x => x.For<ICommandContext>().Use(context));
             var command = new StructureMapContainerCommand(container, arguments, behaviorId);
             
-            return new StructureMapCompiledCommand(container, command);
+            var compilationContext = new StructureMapCompilationContext(container, command);
+            context.Set<ICompilationContext>(compilationContext);
+            container.Configure(x => x.For<ICommandContext>().Use(context));
+
+            return compilationContext;
         }
 
-        public ICommandFactory BuildFactory()
+        public ICompiler BuildCompiler()
         {
             _container.Configure(x =>
             {
@@ -73,11 +75,6 @@ namespace Commander.StructureMap
                 initialize_Singletons_to_work_around_StructureMap_GitHub_Issue_3();
             }
 
-            return this;
-        }
-
-        public IEntityBuilderFactory BuildEntityBuilderFactory()
-        {
             return this;
         }
 
@@ -107,45 +104,6 @@ namespace Commander.StructureMap
             {
                 _registry.For(serviceType).Singleton();
             }
-        }
-
-        public IEntityBuilder Build(ObjectDef builderDef)
-        {
-            using(var container = _container.GetNestedContainer())
-            {
-                return (IEntityBuilder)container.GetInstance(builderDef.Type);
-            }
-        }
-    }
-
-    public class StructureMapCompiledCommand : ICompiledCommand
-    {
-        private readonly IContainer _container;
-        private ICommand _command;
-
-        public StructureMapCompiledCommand(IContainer container, ICommand command)
-        {
-            _container = container;
-            _command = command;
-        }
-
-        public void Dispose()
-        {
-            _command = null;
-            if(_container != null)
-            {
-                _container.Dispose();
-            }
-        }
-
-        public ICommand Command
-        {
-            get { return _command; }
-        }
-
-        public ICommandContext Context
-        {
-            get { return _container.GetInstance<ICommandContext>(); }
         }
     }
 }

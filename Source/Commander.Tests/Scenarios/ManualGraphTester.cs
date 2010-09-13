@@ -29,10 +29,6 @@ namespace Commander.Tests.Scenarios
 
                                                           registry
                                                               .EntityBuilders
-                                                              .IncludeTypesClosing(typeof (IEntityBuilder<>));
-
-                                                          registry
-                                                              .EntityBuilders
                                                               .RegisterAllAvailable();
 
                                                           registry
@@ -67,10 +63,6 @@ namespace Commander.Tests.Scenarios
                 registry
                     .Entities
                     .IncludeType<User>();
-
-                registry
-                    .EntityBuilders
-                    .IncludeTypesClosing(typeof(IEntityBuilder<>));
 
                 registry
                     .EntityBuilders

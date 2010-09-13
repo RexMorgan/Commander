@@ -79,7 +79,9 @@
     <Compile Include="Diagnostics\NulloConfigurationObserver.cs" />
     <Compile Include="Diagnostics\RecordingConfigurationObserver.cs" />
     <Compile Include="DslExtensions.cs" />
-    <Compile Include="Runtime\ICompiledCommand.cs" />
+    <Compile Include="Runtime\DefaultEntityBuilder.cs" />
+    <Compile Include="Runtime\EntityBuilderRegistry.cs" />
+    <Compile Include="Runtime\ICompilationContext.cs" />
     <Compile Include="Runtime\ICommandCompiler.cs" />
     <Compile Include="ICommandInvoker.cs" />
     <Compile Include="Bootstrapping\IContainerFacility.cs" />
@@ -96,15 +98,14 @@
     <Compile Include="Registration\Nodes\CommandCategory.cs" />
     <Compile Include="Registration\Nodes\CommandCall.cs" />
     <Compile Include="Registration\Nodes\CommandNode.cs" />
-    <Compile Include="Registration\Dsl\CommandRegistry.cs" />
+    <Compile Include="CommandRegistry.cs" />
     <Compile Include="Registration\Nodes\Placeholder.cs" />
     <Compile Include="Registration\Nodes\Wrapper.cs" />
     <Compile Include="Registration\ServiceRegistry.cs" />
     <Compile Include="Runtime\CommandContext.cs" />
     <Compile Include="Runtime\ICommandContext.cs" />
-    <Compile Include="Runtime\ICommandFactory.cs" />
+    <Compile Include="Runtime\ICompiler.cs" />
     <Compile Include="Runtime\IEntityBuilder.cs" />
-    <Compile Include="Runtime\IEntityBuilderFactory.cs" />
     <Compile Include="Runtime\IEntityBuilderRegistry.cs" />
     <Compile Include="Registration\TypePool.cs" />
   </ItemGroup>
