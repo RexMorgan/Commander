@@ -84,7 +84,7 @@
     <Compile Include="Runtime\ICompilationContext.cs" />
     <Compile Include="Runtime\ICommandCompiler.cs" />
     <Compile Include="ICommandInvoker.cs" />
-    <Compile Include="Bootstrapping\IContainerFacility.cs" />
+    <Compile Include="Bootstrapping\ICommanderContainer.cs" />
     <Compile Include="IDomainCommand.cs" />
     <Compile Include="Registration\IServiceRegistry.cs" />
     <Compile Include="Registration\Nodes\CommandChain.cs" />

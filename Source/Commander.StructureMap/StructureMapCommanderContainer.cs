@@ -12,7 +12,7 @@ using StructureMap.Pipeline;
 
 namespace Commander.StructureMap
 {
-    public class StructureMapContainerFacility : IContainerFacility, ICompiler
+    public class StructureMapCommanderContainer : ICommanderContainer, ICompiler
     {
         private readonly IContainer _container;
         private readonly Registry _registry;
@@ -25,7 +25,7 @@ namespace Commander.StructureMap
             }
         }
 
-        public StructureMapContainerFacility(IContainer container)
+        public StructureMapCommanderContainer(IContainer container)
         {
             _container = container;
             _registry = new StructureMapCommanderRegistry();
@@ -34,16 +34,16 @@ namespace Commander.StructureMap
                                                  Type = typeof(IContainer),
                                                  Value = container
                                              });
-            Register(typeof(IContainerFacility), new ObjectDef
+            Register(typeof(ICommanderContainer), new ObjectDef
                                             {
-                                                Type = typeof(IContainerFacility),
+                                                Type = typeof(ICommanderContainer),
                                                 Value = this
                                             });
         }
 
         private bool _initializeSingletonsToWorkAroundSmBug = true;
 
-        public StructureMapContainerFacility DoNotInitializeSingletons()
+        public StructureMapCommanderContainer DoNotInitializeSingletons()
         {
             _initializeSingletonsToWorkAroundSmBug = false;
             return this;

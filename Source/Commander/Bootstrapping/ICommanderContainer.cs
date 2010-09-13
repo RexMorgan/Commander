@@ -4,7 +4,7 @@ using Commander.Runtime;
 
 namespace Commander.Bootstrapping
 {
-    public interface IContainerFacility
+    public interface ICommanderContainer
     {
         ICompiler BuildCompiler();
         void Register(Type serviceType, ObjectDef objectDef);

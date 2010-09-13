@@ -16,7 +16,7 @@ namespace Commander.Tests.Scenarios
         {
             var dependency = MockRepository.GenerateMock<IDependency>();
             var container = new Container(x => x.For<IDependency>().Use(dependency));
-            var facility = new StructureMapContainerFacility(container);
+            var facility = new StructureMapCommanderContainer(container);
             CommanderFactory.Initialize(facility, registry =>
                                                       {
                                                           registry
@@ -53,7 +53,7 @@ namespace Commander.Tests.Scenarios
         {
             var dependency = MockRepository.GenerateMock<IDependency>();
             var container = new Container(x => x.For<IDependency>().Use(dependency));
-            var facility = new StructureMapContainerFacility(container);
+            var facility = new StructureMapCommanderContainer(container);
             CommanderFactory.Initialize(facility, registry =>
             {
                 registry

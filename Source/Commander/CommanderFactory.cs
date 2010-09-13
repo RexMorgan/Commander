@@ -14,32 +14,32 @@ namespace Commander
         public static CommandGraph Graph { get { return _graph; } }
         public static ICommandInvoker Invoker { get { return _invoker; } }
 
-        public static void Initialize<TRegistry>(IContainerFacility facility)
+        public static void Initialize<TRegistry>(ICommanderContainer container)
             where TRegistry : CommandRegistry, new()
         {
-            Initialize(facility, new TRegistry());
+            Initialize(container, new TRegistry());
         }
 
 
-        public static void Initialize(IContainerFacility facility, CommandRegistry registry)
+        public static void Initialize(ICommanderContainer container, CommandRegistry registry)
         {
             lock(typeof(CommanderFactory))
             {
                 _graph = registry.BuildGraph();
                 _graph
                     .Services
-                    .ReplaceService<IContainerFacility>(facility);
+                    .ReplaceService<ICommanderContainer>(container);
                 
-                _graph.EachService(facility.Register);
-                registry.BuilderRegistry.EachBuilder(facility.Register);
+                _graph.EachService(container.Register);
+                registry.BuilderRegistry.EachBuilder(container.Register);
 
-                _invoker = new CommandInvoker(_graph, new CommandCompiler(facility, registry.BuilderRegistry));
+                _invoker = new CommandInvoker(_graph, new CommandCompiler(container, registry.BuilderRegistry));
             }
         }
 
-        public static void Initialize(IContainerFacility facility, Action<CommandRegistry> configure)
+        public static void Initialize(ICommanderContainer container, Action<CommandRegistry> configure)
         {
-            Initialize(facility, new CommandRegistry(configure));
+            Initialize(container, new CommandRegistry(configure));
         }
     }
 }

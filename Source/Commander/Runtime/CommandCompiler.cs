@@ -9,11 +9,11 @@ namespace Commander.Runtime
 {
     public class CommandCompiler : ICommandCompiler
     {
-        private readonly IContainerFacility _facility;
+        private readonly ICommanderContainer _container;
         private readonly IEntityBuilderRegistry _builderRegistry;
-        public CommandCompiler(IContainerFacility facility, IEntityBuilderRegistry builderRegistry)
+        public CommandCompiler(ICommanderContainer container, IEntityBuilderRegistry builderRegistry)
         {
-            _facility = facility;
+            _container = container;
             _builderRegistry = builderRegistry;
         }
 
@@ -40,9 +40,9 @@ namespace Commander.Runtime
                 .Placeholder()
                 .ReplaceWith(commandCall);
 
-            _facility.Register(typeof (ICommand), chain.ToObjectDef());
+            _container.Register(typeof (ICommand), chain.ToObjectDef());
 
-            return _facility
+            return _container
                 .BuildCompiler()
                 .Compile(context, new ServiceArguments(), chain.UniqueId);
         }
