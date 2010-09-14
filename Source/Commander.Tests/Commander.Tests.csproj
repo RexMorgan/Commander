@@ -72,10 +72,6 @@
     <Compile Include="when_invoking_a_command.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Commander.Diagnostics\Commander.Diagnostics.csproj">
-      <Project>{44592B3D-6C50-43F2-A323-6AEE22953979}</Project>
-      <Name>Commander.Diagnostics</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Commander.StructureMap\Commander.StructureMap.csproj">
       <Project>{4EC74167-B882-4F8F-95A2-0ACBC4F6C3E6}</Project>
       <Name>Commander.StructureMap</Name>

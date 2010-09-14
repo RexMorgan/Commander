@@ -55,6 +55,7 @@
     <Compile Include="Commands\OneInZeroOutCommandInvoker.cs" />
     <Compile Include="Commands\ZeroInZeroOutCommandInvoker.cs" />
     <Compile Include="Compiler.cs" />
+    <Compile Include="DiagnosticsExtensions.cs" />
     <Compile Include="Registration\InvocationTracerPrepender.cs" />
     <Compile Include="InvocationProblem.cs" />
     <Compile Include="InvocationResult.cs" />
