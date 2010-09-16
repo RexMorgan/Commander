@@ -7,14 +7,19 @@ namespace Commander
         where TEntity : class
     {
         private readonly TEntity _entity;
-        private readonly IEnumerable<InvocationProblem> _problems;
-        public InvocationResult(TEntity entity, IEnumerable<InvocationProblem> problems)
+        private readonly IList<InvocationProblem> _problems;
+        public InvocationResult(TEntity entity)
         {
             _entity = entity;
-            _problems = problems;
+            _problems = new List<InvocationProblem>();
         }
 
         public bool HasProblems { get { return _problems.Any(); } }
+
+        public void AddProblem(InvocationProblem problem)
+        {
+            _problems.Add(problem);
+        }
 
         public IEnumerable<InvocationProblem> Problems
         {

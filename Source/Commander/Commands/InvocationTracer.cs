@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Commander.Runtime;
 
 namespace Commander.Commands
@@ -30,13 +29,16 @@ namespace Commander.Commands
             }
 
             var entity = _context.Get<TEntity>();
-            var problems = new List<InvocationProblem>();
-            if(exception != null)
+            var result = _context.Get<InvocationResult<TEntity>>();
+            if(result == null)
             {
-                problems.Add(new InvocationProblem(_inner, exception));
+                _context.Set(result = new InvocationResult<TEntity>(entity));
             }
 
-            _context.Set(new InvocationResult<TEntity>(entity, problems));
+            if(exception != null)
+            {
+                result.AddProblem(new InvocationProblem(_inner, exception));
+            }
         }
     }
 }
