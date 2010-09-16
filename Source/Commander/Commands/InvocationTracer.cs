@@ -29,10 +29,14 @@ namespace Commander.Commands
             }
 
             var entity = _context.Get<TEntity>();
-            var result = _context.Get<InvocationResult<TEntity>>();
-            if(result == null)
+            InvocationResult<TEntity> result;
+            if(!_context.Has<InvocationResult<TEntity>>())
             {
                 _context.Set(result = new InvocationResult<TEntity>(entity));
+            }
+            else
+            {
+                result = _context.Get<InvocationResult<TEntity>>();
             }
 
             if(exception != null)
